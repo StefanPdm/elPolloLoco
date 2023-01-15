@@ -2,6 +2,7 @@ class Character extends MovableObject {
   height = 240;
   y = -30;
 
+
   IMAGES_WAITING = [
     '../assets/img/2_character_pepe/1_idle/idle/I-1.png',
     '../assets/img/2_character_pepe/1_idle/idle/I-2.png',
@@ -67,6 +68,7 @@ class Character extends MovableObject {
     this.applyGravity();
   }
 
+
   animate() {
     setInterval(() => {
       if (world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -93,12 +95,19 @@ class Character extends MovableObject {
       }
       // move camera position 
       this.world.camera_x = -this.x + 120;
-    }, 1000 / 60)
+    }, 1000 / 60);
 
     setInterval(() => {
       if (this.isDead()) {
+        // if dead abort character and stop all intervals and sound
         this.playAnimation(this.IMAGES_DEAD);
-        this.y += this.speed * 1.5;
+        this.y += this.speed * 2;
+        // console.log('Character Y', this.y);
+        if (this.y > 450) {
+          clearAllIntervals()
+          this.walking_sound.pause();
+          this.walking_sound.currentTime = 0;
+        }
       } else if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
       } else if (this.isAboveGround()) {
@@ -109,5 +118,11 @@ class Character extends MovableObject {
         this.playAnimation(this.IMAGES_WAITING);
       }
     }, 1000 / 10)
+
   }
+
+
+
+
+
 }

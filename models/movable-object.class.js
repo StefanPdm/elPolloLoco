@@ -33,16 +33,7 @@ class MovableObject extends DrawableObject {
     }
   }
 
-  isColliding(obj) {
-    // console.log('Collision check', obj);
-    // console.log('this.x', this.x);
-    // console.log('this.width', this.width);
-    return (this.x + this.width) >= obj.x && this.x <= (obj.x + obj.width) &&
-      (this.y + this.height) >= obj.y &&
-      (this.y) <= (obj.y + obj.height);
-    // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
-    // && obj.onCollisionCourse;
-  }
+
 
   hit() {
     this.energy -= 5;
@@ -64,15 +55,7 @@ class MovableObject extends DrawableObject {
   }
 
 
-  playAnimation(images) {
-    ///////// Walk Animation
-    // Modulo % erzeugt Werte von 0-5 (5=IMAGES_WALKING.length)
-    let i = this.currentImage % images.length; //Modulo
-    let path = images[i];
-    this.img = this.imageCache[path];
-    this.currentImage++;
-    // if (i == 5) { this.currentImage = 0 }; <-- nicht mehr nötig, da Modulo Fkt. oben
-  }
+
 
   moveRight() {
     this.x += this.speed;
@@ -85,4 +68,6 @@ class MovableObject extends DrawableObject {
   jump() {
     this.speedY = 30;
   }
+
+
 }

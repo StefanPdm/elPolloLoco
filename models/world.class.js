@@ -10,6 +10,7 @@ class World {
   keyboard;
   camera_x = 0;
   bottles = [];
+  coinsCollected = 0;
 
 
   constructor(canvasGame, keyboard) {
@@ -49,10 +50,20 @@ class World {
         // console.log('Character is colliding with enemy:', enemy);
         this.character.hit();
         this.statusBarHealthBlue.setPercentage(this.character.energy);
-        console.log('Character energy:', this.character.energy);
+        // console.log('Character energy:', this.character.energy);
         // console.log('Dead', this.character.isDead());
       };
     });
+
+    this.level.coins.forEach((coin, i) => {
+
+      if (this.character.isColliding(coin)) {
+        console.log('Character is colliding with coin:', this.level.coins[i], 'Index:', i);
+        this.level.coins.pop(coin);
+      };
+    });
+
+
   }
 
 
@@ -61,11 +72,15 @@ class World {
     this.ctx.clearRect(0, 0, this.worldCanvas.width, this.worldCanvas.height);
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backgroundObject);
+
     this.addObjectsToMap(this.level.clouds);
     this.addObjectsToMap(this.level.enemies);
+    this.addObjectsToMap(this.level.coins);
+
     this.addToMap(this.character);
     this.addObjectsToMap(this.bottles);
     this.ctx.translate(-this.camera_x, 0);
+    // ab hier elemente die sich nicht verschieben
     this.addToMap(this.statusBarHealthBlue);
     // Draw wird immer wieder aufgerufen, je nach 
     let self = this;
@@ -99,6 +114,10 @@ class World {
     this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
     mo.x = mo.x * -1;
     this.ctx.restore();
+  }
+
+  clearAllIntervals() {
+    for (let i = 1; i < 9999; i++) window.clearInterval(i);
   }
 }
 

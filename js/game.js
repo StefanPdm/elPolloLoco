@@ -12,7 +12,7 @@ function init() {
 
 // Hinweis: Pfeiltasten werden nur bei keydown getriggert, NICHT bei keypress
 window.addEventListener('keydown', (KeyboardEvent) => {
-  console.log('Taste gedrückt:', KeyboardEvent.code);
+  // console.log('Taste gedrückt:', KeyboardEvent.code);
   currentKey = KeyboardEvent.code;
   if (currentKey === 'ArrowRight') {
     keyboard.RIGHT = true;
@@ -56,3 +56,7 @@ window.addEventListener('keyup', (KeyboardEvent) => {
     keyboard.D = false;
   }
 });
+
+function clearAllIntervals() {
+  for (let i = 1; i < 9999; i++) window.clearInterval(i);
+}
