@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El pollo loco</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+  <!--  -->
+  <script src="../models/drawable-object.class.js"></script>
+  <script src="../models/movable-object.class.js"></script>
+
+  <script src="../models/character.class.js"></script>
+  <script src="../models/chicken.class.js"></script>
+  <script src="../models/cloud.class.js"></script>
+  <script src="../models/background-object.class.js"></script>
+  <script src="../models/endboss.class.js"></script>
+  <script src="../models/level.class.js"></script>
+  <script src="../levels/level1.js"></script>
+  <script src="../models/keyboard.class.js"></script>
+  <script src="../models/status-bar.class.js"></script>
+  <script src="../models/throwable-object.class.js"></script>
+  <script src="../models/world.class.js"></script>
+  <script src="../js/game.js"></script>
+
+</head>
+
+<body onload="init()">
+  <div class="game__main-container">
+
+    <div class="canvas-container">
+      <h1>El pollo loco</h1>
+
+      <canvas id="canvas" width="720px" height="480px"></canvas>
+      <div class="wrapper__bottom-line">
+        <h4> <strong>&nbsp;?&nbsp;</strong> Arrows LEFT/RIGHT: Walk | SPACEBAR: Jump | D-Key: Throw
+          Bottle
+        </h4>
+        <!-- <span>fjkdfjks fgf gfd gfd</span> -->
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>
