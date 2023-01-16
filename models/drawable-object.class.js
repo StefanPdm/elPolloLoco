@@ -7,6 +7,12 @@ class DrawableObject {
   width = 100;
   height = 150;
   parallax = 0;
+  offset = {
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+  };
 
   loadImage(path) {
     this.img = new Image(); //anzeigbares Bild erzeugen
@@ -18,7 +24,7 @@ class DrawableObject {
   }
 
   drawFrame(ctx) {
-    if (this instanceof Character || this instanceof Chicken || this instanceof CollectableObject) {
+    if (this instanceof Character || this instanceof Chicken || this instanceof CollectableObject || this instanceof Endboss) {
       ctx.beginPath();
       ctx.lineWidth = "1";
       ctx.strokeStyle = "blue";
@@ -47,12 +53,10 @@ class DrawableObject {
   }
 
   isColliding(obj) {
-    // console.log('Collision check', obj);
-    // console.log('this.x', this.x);
-    // console.log('this.width', this.width);
-    return (this.x + this.width) >= obj.x && this.x <= (obj.x + obj.width) &&
-      (this.y + this.height) >= obj.y &&
-      (this.y) <= (obj.y + obj.height);
+    return (this.x + this.width - this.offset.right) >= (obj.x + obj.offset.left) &&
+      this.x + this.offset.left <= (obj.x + obj.width - obj.offset.right) &&
+      (this.y + this.height - this.offset.bottom) >= (obj.y + obj.offset.top) &&
+      (this.y + this.offset.top) <= (obj.y + obj.height - obj.offset.bottom);
     // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
     // && obj.onCollisionCourse;
   }

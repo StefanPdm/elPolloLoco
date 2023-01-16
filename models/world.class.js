@@ -3,7 +3,8 @@ class World {
   // enemies = level1.enemies;
   // clouds = level1.clouds;
   // backgroundObject = level1.backgroundObject;
-  statusBarHealthBlue = new StatusBar();
+  statusBarHealthBlue = new StatusBarHealth();
+  statusBarCoinGreen = new StatusBarCoins();
   level = level1; // greift auf die o.g. Variablen zu 
   worldCanvas;
   ctx;
@@ -45,26 +46,33 @@ class World {
   }
 
   checkCollision() {
+    this.checkCollisionEnemy();
+    this.checkCollisionCoin();
+  }
+
+
+  checkCollisionEnemy() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
-        // console.log('Character is colliding with enemy:', enemy);
         this.character.hit();
         this.statusBarHealthBlue.setPercentage(this.character.energy);
-        // console.log('Character energy:', this.character.energy);
-        // console.log('Dead', this.character.isDead());
       };
     });
+  }
 
+  checkCollisionCoin() {
     this.level.coins.forEach((coin, i) => {
-
       if (this.character.isColliding(coin)) {
         console.log('Character is colliding with coin:', this.level.coins[i], 'Index:', i);
-        this.level.coins.pop(coin);
+        coin.y = -100;
+        this.coinsCollected += 1;
+        document.getElementById('coinsCollected').innerHTML = /*html*/ `${this.coinsCollected} / 10 `;
       };
     });
-
-
   }
+
+
+
 
 
   draw() {
@@ -82,6 +90,7 @@ class World {
     this.ctx.translate(-this.camera_x, 0);
     // ab hier elemente die sich nicht verschieben
     this.addToMap(this.statusBarHealthBlue);
+    this.addToMap(this.statusBarCoinGreen);
     // Draw wird immer wieder aufgerufen, je nach 
     let self = this;
     requestAnimationFrame(function () {
