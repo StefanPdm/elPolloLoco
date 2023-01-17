@@ -5,6 +5,7 @@ class World {
   // backgroundObject = level1.backgroundObject;
   statusBarHealthBlue = new StatusBarHealth();
   statusBarCoinGreen = new StatusBarCoins();
+  statusBarBottleOrange = new StatusBarBottles();
   level = level1; // greift auf die o.g. Variablen zu 
   worldCanvas;
   ctx;
@@ -12,6 +13,7 @@ class World {
   camera_x = 0;
   bottles = [];
   coinsCollected = 0;
+  bottlesCollected = 0;
 
 
   constructor(canvasGame, keyboard) {
@@ -33,21 +35,24 @@ class World {
       this.checkThrowObject();
       // Check collisions ///////////////////////////////
       this.checkCollision();
-    }, 200);
+    }, 100);
   }
 
   checkThrowObject() {
     // check throwing bottles
-    if (this.keyboard.D) {
+    if (this.keyboard.D && this.bottlesCollected > 0) {
       let bottle = new ThrowableObject(this.character.x + 40, this.character.y + 100);
       this.bottles.push(bottle);
+      this.bottlesCollected -= 1;
+      document.getElementById('bottlesCollected').innerHTML = /*html*/ `${this.bottlesCollected}`;
     }
-
   }
+
+
 
   checkCollision() {
     this.checkCollisionEnemy();
-    this.checkCollisionCoin();
+    this.checkCollisionCollectable();
   }
 
 
@@ -60,20 +65,32 @@ class World {
     });
   }
 
-  checkCollisionCoin() {
-    this.level.coins.forEach((coin, i) => {
-      if (this.character.isColliding(coin)) {
-        console.log('Character is colliding with coin:', this.level.coins[i], 'Index:', i);
-        coin.y = -100;
-        this.coinsCollected += 1;
-        document.getElementById('coinsCollected').innerHTML = /*html*/ `${this.coinsCollected} / 10 `;
+  checkCollisionCollectable() {
+    this.level.collectables.forEach((collectable, i) => {
+      if (this.character.isColliding(collectable)) {
+
+        if (collectable.type === 'coin') {
+          this.increaseCoinAmount(collectable);
+        }
+        if (collectable.type === 'bottle') {
+          this.increaseBottleAmount(collectable);
+        }
       };
     });
   }
 
+  increaseCoinAmount(collectable) {
+    collectable.y = -100;
+    this.coinsCollected += 1;
+    document.getElementById('coinsCollected').innerHTML = /*html*/ `${this.coinsCollected} / 10 `;
+  }
 
-
-
+  increaseBottleAmount(collectable) {
+    collectable.y = -100;
+    this.bottlesCollected += 1;
+    document.getElementById('bottlesCollected').innerHTML = /*html*/ `${this.bottlesCollected}`;
+    console.log('Bottles collected: ', this.bottlesCollected);
+  }
 
   draw() {
     // Clear Canvas before draw (again)
@@ -83,7 +100,8 @@ class World {
 
     this.addObjectsToMap(this.level.clouds);
     this.addObjectsToMap(this.level.enemies);
-    this.addObjectsToMap(this.level.coins);
+    this.addObjectsToMap(this.level.collectables);
+
 
     this.addToMap(this.character);
     this.addObjectsToMap(this.bottles);
@@ -91,6 +109,7 @@ class World {
     // ab hier elemente die sich nicht verschieben
     this.addToMap(this.statusBarHealthBlue);
     this.addToMap(this.statusBarCoinGreen);
+    this.addToMap(this.statusBarBottleOrange);
     // Draw wird immer wieder aufgerufen, je nach 
     let self = this;
     requestAnimationFrame(function () {

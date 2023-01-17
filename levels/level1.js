@@ -1,15 +1,28 @@
 const level1 = new Level(
+
   [
-    new CollectableObject(),
-    new CollectableObject(),
-    new CollectableObject(),
-    new CollectableObject(),
-    new CollectableObject(),
-    new CollectableObject(),
-    new CollectableObject(),
-    new CollectableObject(),
-    new CollectableObject(),
-    new CollectableObject()
+    new Coin(),
+    new Coin(),
+    new Coin(),
+    new Coin(),
+    new Coin(),
+    new Coin(),
+    new Coin(),
+    new Coin(),
+    new Coin(),
+    new Coin(),
+    new Bottle(),
+    new Bottle(),
+    new Bottle(),
+    new Bottle(),
+    new Bottle(),
+    new Bottle(),
+    new Bottle(),
+    new Bottle(),
+    new Bottle(),
+    new Bottle(),
+    new Bottle(),
+    new Bottle()
   ],
   [
     // new Chicken(),

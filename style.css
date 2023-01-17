@@ -110,13 +110,22 @@ canvas {
   background-color: black;
 }
 
-#coinsCollected {
+.collected {
+  color: white;
   position: absolute;
   font-size: 1rem;
-  top: 10.6%;
   left: 29%;
-  color: white;
 }
+
+#coinsCollected {
+  top: 10.6%;
+}
+
+#bottlesCollected {
+  top: 17.5%;
+}
+
+
 
 @media (width < 720px) {
   h1 {
