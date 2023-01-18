@@ -1,12 +1,9 @@
 class World {
   character = new Character();
-  // enemies = level1.enemies;
-  // clouds = level1.clouds;
-  // backgroundObject = level1.backgroundObject;
   statusBarHealthBlue = new StatusBarHealth();
   statusBarCoinGreen = new StatusBarCoins();
   statusBarBottleOrange = new StatusBarBottles();
-  level = level1; // greift auf die o.g. Variablen zu 
+  level = level1;
   worldCanvas;
   ctx;
   keyboard;
@@ -48,25 +45,23 @@ class World {
     }
   }
 
-
-
   checkCollision() {
     this.checkCollisionEnemy();
     this.checkCollisionCollectable();
+    this.checkCollisionBottleWithEndboss();
   }
-
 
   checkCollisionEnemy() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
-        this.character.hit();
+        this.character.hit(5);
         this.statusBarHealthBlue.setPercentage(this.character.energy);
       };
     });
   }
 
   checkCollisionCollectable() {
-    this.level.collectables.forEach((collectable, i) => {
+    this.level.collectables.forEach((collectable) => {
       if (this.character.isColliding(collectable)) {
 
         if (collectable.type === 'coin') {
@@ -76,6 +71,16 @@ class World {
           this.increaseBottleAmount(collectable);
         }
       };
+    });
+  }
+
+  checkCollisionBottleWithEndboss() {
+    this.bottles.forEach((flyingBottle) => {
+      if (this.level.enemies[0].isColliding(flyingBottle)) {
+        console.log('Endboss hidden!!!!');
+        this.level.enemies[0].hit(4);
+        console.log('Energy:', this.level.enemies[0].energy);
+      }
     });
   }
 
@@ -89,7 +94,7 @@ class World {
     collectable.y = -100;
     this.bottlesCollected += 1;
     document.getElementById('bottlesCollected').innerHTML = /*html*/ `${this.bottlesCollected}`;
-    console.log('Bottles collected: ', this.bottlesCollected);
+    // console.log('Bottles collected: ', this.bottlesCollected);
   }
 
   draw() {

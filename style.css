@@ -154,13 +154,16 @@ canvas {
     width: 100%;
   }
 
-  #coinsCollected {
+  #coinsCollected,
+  #bottlesCollected {
     font-size: 0.8rem;
   }
 }
 
 @media (width < 410px) {
-  #coinsCollected {
+
+  #coinsCollected,
+  #bottlesCollected {
     font-size: 0.6rem;
   }
 }

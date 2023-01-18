@@ -1,21 +1,17 @@
-class StatusBarHealth extends DrawableObject {
+class StatusBarEndboss extends DrawableObject {
   percentage = 100;
 
-
-  IMAGES_HEALTH_BLUE = [
-    './assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/0.png',
-    './assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/20.png',
-    './assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/40.png',
-    './assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/60.png',
-    './assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/80.png',
-    './assets/img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png'
-  ];
+  IMAGES_ENDBOSS = [
+    './assets/img/7_statusbars/2_statusbar_endboss/green.png',
+    './assets/img/7_statusbars/2_statusbar_endboss/blue.png',
+    './assets/img/7_statusbars/2_statusbar_endboss/orange.png'
+  ]
 
   constructor() {
-    super().loadImage(this.IMAGES_HEALTH_BLUE[5]);
-    this.loadAllImages(this.IMAGES_HEALTH_BLUE);
+    super().loadImage(this.IMAGES_ENDBOSSE[0]);
+    this.loadAllImages(this.IMAGES_ENDBOSS);
     this.setPercentage(this.percentage);
-    this.x = 30;
+    this.x = calc(720 - 30 - 170);
     this.y = -3;
     this.width = 170;
     this.height = 40;
@@ -45,4 +41,6 @@ class StatusBarHealth extends DrawableObject {
       return 0;
     }
   }
+
+
 }

@@ -11,7 +11,7 @@ class Bottle extends DrawableObject {
     this.loadImage(this.IMAGES_BOTTLE[0]);
 
     this.loadAllImages(this.IMAGES_BOTTLE);
-    this.x = -600 + (Math.random() * 1800); // Zahl zwischen 200 und 2000
+    this.x = -600 + (Math.random() * 1800) + (Math.random() * 1000); // Zahl zwischen -600 und 1800
     this.y = 180 + (Math.random() * 200);   // Zahl zwischen 180 und 380 
     this.width = 50;
     this.height = 50;
