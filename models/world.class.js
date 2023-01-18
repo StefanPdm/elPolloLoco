@@ -3,7 +3,10 @@ class World {
   statusBarHealthBlue = new StatusBarHealth();
   statusBarCoinGreen = new StatusBarCoins();
   statusBarBottleOrange = new StatusBarBottles();
+  statusBarEndboss = new StatusBarEndboss();
+
   level = level1;
+
   worldCanvas;
   ctx;
   keyboard;
@@ -78,10 +81,15 @@ class World {
     this.bottles.forEach((flyingBottle) => {
       if (this.level.enemies[0].isColliding(flyingBottle)) {
         console.log('Endboss hidden!!!!');
-        this.level.enemies[0].hit(4);
+        this.level.enemies[0].hit(20);
+        flyingBottle.y = 600;
         console.log('Energy:', this.level.enemies[0].energy);
       }
     });
+    if (this.level.enemies[0].energy <= 0) {
+      console.log('GAMEOVER');
+      // setTimeout(this.gameOver, 1000);
+    }
   }
 
   increaseCoinAmount(collectable) {
@@ -99,7 +107,7 @@ class World {
 
   draw() {
     // Clear Canvas before draw (again)
-    this.ctx.clearRect(0, 0, this.worldCanvas.width, this.worldCanvas.height);
+    // this.ctx.clearRect(100, 100, this.worldCanvas.width, this.worldCanvas.height);
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backgroundObject);
 
@@ -115,6 +123,8 @@ class World {
     this.addToMap(this.statusBarHealthBlue);
     this.addToMap(this.statusBarCoinGreen);
     this.addToMap(this.statusBarBottleOrange);
+    this.addToMap(this.statusBarEndboss);
+
     // Draw wird immer wieder aufgerufen, je nach 
     let self = this;
     requestAnimationFrame(function () {
@@ -152,5 +162,11 @@ class World {
   clearAllIntervals() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
   }
+
+  gameOver() {
+
+
+  }
+
 }
 

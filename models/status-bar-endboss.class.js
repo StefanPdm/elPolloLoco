@@ -8,10 +8,10 @@ class StatusBarEndboss extends DrawableObject {
   ]
 
   constructor() {
-    super().loadImage(this.IMAGES_ENDBOSSE[0]);
+    super().loadImage(this.IMAGES_ENDBOSS[0]);
     this.loadAllImages(this.IMAGES_ENDBOSS);
     this.setPercentage(this.percentage);
-    this.x = calc(720 - 30 - 170);
+    this.x = (720 - 30 - 170);
     this.y = -3;
     this.width = 170;
     this.height = 40;
@@ -21,25 +21,21 @@ class StatusBarEndboss extends DrawableObject {
   setPercentage(percentage) {
     this.percentage = percentage;
     setInterval(() => {
-      let path = this.IMAGES_HEALTH_BLUE[this.resolveImageIndex()];// => aus % muss Zahl von 0-5 ermittelt werden(IMAGES.length)
+      let path = this.IMAGES_ENDBOSS[this.resolveImageIndex()];// => aus % muss Zahl von 0-2 ermittelt werden(IMAGES.length)
       this.img = this.imageCache[path];
     }, 1000 / 20);
   }
 
   resolveImageIndex() {
-    if (this.percentage == 100) {
-      return 5;
-    } else if (this.percentage >= 80) {
-      return 4;
-    } else if (this.percentage >= 60) {
-      return 3;
+    this.percentage = world.level.enemies[0].energy;
+    if (this.percentage >= 80) {
+      return 0;
     } else if (this.percentage >= 40) {
-      return 2;
-    } else if (this.percentage > 0) {
       return 1;
     } else {
-      return 0;
+      return 2;
     }
+
   }
 
 

@@ -4,7 +4,7 @@ class Character extends MovableObject {
   world;
   speed = 5;
   walking_sound = new Audio('./assets/audio/running2.mp3')
-
+  screen;
 
 
   IMAGES_WAITING = [
@@ -49,13 +49,13 @@ class Character extends MovableObject {
     'assets/img/2_character_pepe/5_dead/D-55.png',
     'assets/img/2_character_pepe/5_dead/D-56.png',
     'assets/img/2_character_pepe/5_dead/D-57.png'
-  ]
+  ];
 
   IMAGES_HURT = [
     'assets/img/2_character_pepe/4_hurt/H-41.png',
     'assets/img/2_character_pepe/4_hurt/H-42.png',
     'assets/img/2_character_pepe/4_hurt/H-43.png',
-  ]
+  ];
 
 
 
@@ -113,7 +113,7 @@ class Character extends MovableObject {
         this.y += this.speed * 2;
         // console.log('Character Y', this.y);
         if (this.y > 450) {
-          clearAllIntervals()
+          this.gameOver();
           this.walking_sound.pause();
           this.walking_sound.currentTime = 0;
         }
@@ -131,7 +131,8 @@ class Character extends MovableObject {
   }
 
 
-
-
-
+  gameOver() {
+    clearAllIntervals();
+    ctx.drawImage('./assets/img/5_background/first_half_background.png', 0, 0);
+  }
 }

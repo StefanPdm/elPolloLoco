@@ -19,7 +19,14 @@ body {
   background-image: linear-gradient(180deg, transparent, hsl(193, 93%, 39%) calc(50% - 240px), hsl(25, 89%, 32%) calc(50% + 240px), transparent);
   background-repeat: no-repeat;
   font-family: 'zabars', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
 
+.d-none {
+  display: none;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 .game__main-container {
@@ -107,7 +114,7 @@ canvas {
 }
 
 #canvas {
-  background-color: black;
+  /* background-color: black; */
 }
 
 .collected {

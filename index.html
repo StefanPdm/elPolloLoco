@@ -21,14 +21,17 @@
   <script src="./models/endboss.class.js"></script>
   <script src="./models/throwable-object.class.js"></script>
   <script src="./models/level.class.js"></script>
+
   <script src="./levels/level1.js"></script>
+  <script src="./levels/game-over-screen.js"></script>
+
   <script src="./models/keyboard.class.js"></script>
   <script src="./models/status-bar-health.class.js"></script>
   <script src="./models/status-bar-coins.class.js"></script>
   <script src="./models/status-bar-bottles.class.js"></script>
   <script src="./models/status-bar-endboss.class.js"></script>
   <script src="./models/world.class.js"></script>
-  <script src="./js/game.js"></script>
+
 
 </head>
 
@@ -37,22 +40,23 @@
     <div class="canvas-container">
       <h1>El pollo loco</h1>
       <div class="canvas-wrapper">
-        <canvas id="canvas" width="720px" height="480px"></canvas>
+        <canvas class="pointer" id="canvas" width="720px" height="480px"></canvas>
       </div>
       <div class="wrapper__bottom-line">
         <h4> <strong>&nbsp;?&nbsp;</strong> Arrows LEFT/RIGHT: Walk | SPACEBAR: Jump | D-Key: Throw
           Bottle
         </h4>
       </div>
-      <div id="coinsCollected" class="collected">
+      <div class="d-none" id="coinsCollected" class="collected">
         0 / 10
       </div>
-      <div id="bottlesCollected" class="collected">
+      <div class="d-none" id="bottlesCollected" class="collected">
         0
       </div>
     </div>
 
   </div>
+  <script src="./js/game.js"></script>
 </body>
 
 </html>

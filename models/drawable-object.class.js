@@ -61,4 +61,8 @@ class DrawableObject {
     // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
     // && obj.onCollisionCourse;
   }
+
+
+
+
 }
