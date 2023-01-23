@@ -1,7 +1,4 @@
 class ThrowableObject extends MovableObject {
-  // IMAGES_BOTTLE = ['./assets/img/6_salsa_bottle/salsa_bottle.png',
-  //   './assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png'
-  // ]
 
   IMAGES_BOTTLE_ROTATION = [
     './assets/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
@@ -42,7 +39,9 @@ class ThrowableObject extends MovableObject {
 
   animate() {
     setInterval(() => {
-      this.playAnimation(this.IMAGES_BOTTLE_ROTATION);
+      if (!paused) {
+        this.playAnimation(this.IMAGES_BOTTLE_ROTATION);
+      }
     }, 1000 / 25);
   }
 }

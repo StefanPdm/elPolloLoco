@@ -1,6 +1,5 @@
 "use strict"
 
-
 let canvas;
 let world;
 let keyboard = new Keyboard();
@@ -19,6 +18,9 @@ let throwed;
 let levelCounter = 0;
 let pause;
 let paused = false;
+let fullScreenContainer;
+let fullscreen;
+let fullscreenOn = false;
 
 
 function init() {
@@ -64,22 +66,20 @@ function toogleViewofElements() {
 }
 
 function showGameButtons() {
-
   document.getElementById('left-button').classList.remove('d-none');
   document.getElementById('right-button').classList.remove('d-none');
   document.getElementById('jump-button').classList.remove('d-none');
   document.getElementById('throw-button').classList.remove('d-none');
+  document.getElementById('fullscreen-button').classList.remove('d-none');
 }
 
 function hideGameButtons() {
-  // document.getElementById('start-button').classList.add('d-none');
   document.getElementById('left-button').classList.add('d-none');
   document.getElementById('right-button').classList.add('d-none');
   document.getElementById('jump-button').classList.add('d-none');
   document.getElementById('throw-button').classList.add('d-none');
+  document.getElementById('fullscreen-button').classList.add('d-none');
 }
-
-
 
 function setButtonListener() {
   setStartButtonListener();
@@ -89,16 +89,48 @@ function setButtonListener() {
   setJumpButtonListener();
   setThrowButtonListener();
   setPauseButtonListener();
+  setFullscreenButtonListener();
 }
 
 function setStartButtonListener() {
   start = document.getElementById('start-button');
   start.addEventListener('click', startGame);
+
 }
 
 function setPauseButtonListener() {
   pause = document.getElementById('pause-button');
   pause.addEventListener('click', pauseAllIntervals);
+}
+
+function setFullscreenButtonListener() {
+  fullscreen = document.getElementById('fullscreen-button');
+  fullscreen.addEventListener('click', toggleFullscreen);
+  fullScreenContainer = document.getElementById('game__main-container');
+  fullScreenContainer.addEventListener('fullscreenchange', toggleFullscreenStatus);
+}
+
+function toggleFullscreenStatus() {
+  if (!fullscreenOn) {
+    fullscreenOn = true;
+    document.getElementById('fullscreen-button').style.backgroundImage = 'url(./assets/img/buttons/exit-fullscreen-button.png)';
+  } else {
+    fullscreenOn = false;
+    document.getElementById('fullscreen-button').style.backgroundImage = 'url(./assets/img/buttons/fullscreen-button.png)';
+  }
+}
+
+function toggleFullscreen() {
+  if (fullscreenOn) {
+    // fullscreenOn = false;
+    // document.getElementById('fullscreen-button').style.backgroundImage = 'url(./assets/img/buttons/fullscreen-button.png)';
+    closeFullscreen();
+
+  } else {
+    // fullscreenOn = true;
+    // document.getElementById('fullscreen-button').style.backgroundImage = 'url(./assets/img/buttons/exit-fullscreen-button.png)';
+    openFullscreen(fullScreenContainer);
+  }
 }
 
 function setHelpButtonListener() {
@@ -111,11 +143,9 @@ function setHelpButtonListener() {
 function setRightButtonListener() {
   goRight = document.getElementById('right-button');
   goRight.addEventListener('touchstart', function (event) {
-    // console.log('Event:', event)
     world.keyboard.RIGHT = true;
   })
   goRight.addEventListener('touchend', function (event) {
-    // console.log('Event:', event)
     world.keyboard.RIGHT = false;
   })
 }
@@ -123,11 +153,9 @@ function setRightButtonListener() {
 function setLeftButtonListener() {
   goLeft = document.getElementById('left-button');
   goLeft.addEventListener('touchstart', function (event) {
-    // console.log('Event:', event)
     world.keyboard.LEFT = true;
   })
   goLeft.addEventListener('touchend', function (event) {
-    // console.log('Event:', event)
     world.keyboard.LEFT = false;
   })
 }
@@ -135,11 +163,9 @@ function setLeftButtonListener() {
 function setJumpButtonListener() {
   jump = document.getElementById('jump-button');
   jump.addEventListener('touchstart', function (event) {
-    // console.log('Event:', event)
     world.keyboard.SPACE = true;
   })
   jump.addEventListener('touchend', function (event) {
-    // console.log('Event:', event)
     world.keyboard.SPACE = false;
   })
 }
@@ -147,11 +173,9 @@ function setJumpButtonListener() {
 function setThrowButtonListener() {
   throwed = document.getElementById('throw-button');
   throwed.addEventListener('touchstart', function (event) {
-    // console.log('Event:', event)
     world.keyboard.D = true;
   })
   throwed.addEventListener('touchend', function (event) {
-    // console.log('Event:', event)
     world.keyboard.D = false;
   })
 }
@@ -163,10 +187,11 @@ function pauseAllIntervals() {
   } else {
     paused = true;
     document.getElementById('pause-button').style.backgroundImage = 'url(./assets/img/buttons/play-button.png)';
-
+    world.character.walking_sound.pause();
   }
-
 }
+
+
 
 function exitGame(img) {
   gameOver = true;
@@ -180,7 +205,6 @@ function exitGame(img) {
 
 // Hinweis: Pfeiltasten werden nur bei keydown getriggert, NICHT bei keypress
 window.addEventListener('keydown', (KeyboardEvent) => {
-  // console.log('Taste gedrückt:', KeyboardEvent.code);
   currentKey = KeyboardEvent.code;
   if (currentKey === 'ArrowRight') {
     keyboard.RIGHT = true;
@@ -203,7 +227,6 @@ window.addEventListener('keydown', (KeyboardEvent) => {
 });
 
 window.addEventListener('keyup', (KeyboardEvent) => {
-  // console.log('Taste losgelassen:', KeyboardEvent.code);
   currentKey = KeyboardEvent.code;
   if (currentKey === 'ArrowRight') {
     keyboard.RIGHT = false;
@@ -225,7 +248,30 @@ window.addEventListener('keyup', (KeyboardEvent) => {
   }
 });
 
+
+
 function clearAllIntervals() {
   for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
 
+/* View in fullscreen */
+function openFullscreen(elem) {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    elem.msRequestFullscreen();
+  }
+}
+
+/* Close fullscreen */
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) { /* Safari */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE11 */
+    document.msExitFullscreen();
+  }
+}

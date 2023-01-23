@@ -2,8 +2,8 @@ class StatusBarEndboss extends DrawableObject {
   percentage = 100;
 
   IMAGES_ENDBOSS = [
-    './assets/img/7_statusbars/2_statusbar_endboss/green.png',
     './assets/img/7_statusbars/2_statusbar_endboss/blue.png',
+    './assets/img/7_statusbars/2_statusbar_endboss/green.png',
     './assets/img/7_statusbars/2_statusbar_endboss/orange.png'
   ]
 

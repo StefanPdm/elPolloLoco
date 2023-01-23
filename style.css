@@ -10,7 +10,6 @@
 }
 
 body {
-
   display: flex;
   position: relative;
   height: 100vh;
@@ -79,7 +78,6 @@ h4 {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-/* .wrapper__bottom-line:hover, */
 .showHelp {
   transition: all 0.5s ease-in-out;
   width: calc(100% - 2em) !important;
@@ -94,11 +92,13 @@ h4 {
   align-items: center;
   border-radius: 10px;
   box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.4);
+  max-width: 720px;
+  max-height: 480px;
+
 }
 
 .canvas-wrapper {
   display: flex;
-  /* flex: 1 1 auto; */
 }
 
 canvas {
@@ -109,10 +109,6 @@ canvas {
   border-radius: 10px;
   border: 2px solid black;
   overflow: hidden;
-}
-
-#canvas {
-  /* background-color: black; */
 }
 
 .collected {
@@ -136,8 +132,6 @@ canvas {
   height: 100%;
   top: 0;
   left: 0;
-  /* background-color: aqua; */
-  /* opacity: .5; */
 }
 
 .button {
@@ -148,7 +142,6 @@ canvas {
   background-position: center;
   background-size: cover;
   cursor: pointer;
-  /* z-index: 10; */
 }
 
 .btn-start {
@@ -185,9 +178,18 @@ canvas {
 .btn-pause {
   top: 2%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(calc(-50% - 2rem));
   background-image: url('./assets/img/buttons/pause-button.png');
 }
+
+.btn-fullscreen {
+  top: 2%;
+  left: 50%;
+  transform: translateX(calc(-50% + 2rem));
+  background-image: url('./assets/img/buttons/fullscreen-button.png');
+}
+
+
 
 @media (width < 720px) {
   h1 {
@@ -197,8 +199,6 @@ canvas {
 
   h4 {
     font-size: 0.5em;
-
-    /* border: 1px solid black; */
     font-weight: normal;
   }
 
@@ -207,11 +207,9 @@ canvas {
     width: 0.9em;
     top: calc(50% + 50% - 1.5em);
   }
-
 }
 
 @media (width < 610px) {
-
   .canvas-container {
     width: 100%;
   }
@@ -233,11 +231,20 @@ canvas {
     width: 2em;
     height: 2em;
   }
+
+  .btn-pause {
+    transform: translateX(calc(-50% - 1rem));
+  }
+
+  .btn-fullscreen {
+    transform: translateX(calc(-50% + 1rem));
+  }
 }
 
 @media (height < 480px) {
   canvas {
     height: 100vh;
+    width: 100%;
   }
 
   body {
@@ -246,7 +253,7 @@ canvas {
 
   .canvas-container,
   .canvas-wrapper {
-    /* width: 100%; */
+    width: 100%;
   }
 
   .wrapper__bottom-line {

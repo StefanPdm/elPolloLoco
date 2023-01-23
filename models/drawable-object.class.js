@@ -12,7 +12,7 @@ class DrawableObject {
     bottom: 0,
     left: 0,
     right: 0,
-  };
+  }
 
   loadImage(path) {
     this.img = new Image(); //anzeigbares Bild erzeugen
@@ -25,7 +25,6 @@ class DrawableObject {
 
   drawFrame(ctx) {
     if (this instanceof Character || this instanceof Chicken || this instanceof Coin || this instanceof Endboss || this instanceof Bottle) {
-
       ctx.beginPath();
       ctx.lineWidth = "1";
       ctx.strokeStyle = "blue";
@@ -61,8 +60,4 @@ class DrawableObject {
     // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
     // && obj.onCollisionCourse;
   }
-
-
-
-
 }

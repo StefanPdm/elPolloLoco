@@ -9,8 +9,8 @@ class Coin extends DrawableObject {
     super();
     this.loadImage('./assets/img/8_coin/coin_1.png');
     this.loadAllImages(this.IMAGES_COIN);
-    this.x = -600 + (Math.random() * 1000) + (Math.random() * 1800); // Zahl zwischen -600 und 1800
-    this.y = 180 + (Math.random() * 200);   // Zahl zwischen 180 und 380 
+    this.x = -600 + (Math.random() * 1000) + (Math.random() * 1800);
+    this.y = 180 + (Math.random() * 200);
     this.width = 50;
     this.height = 50;
     this.offset.top = 10;
@@ -23,9 +23,9 @@ class Coin extends DrawableObject {
 
   animate() {
     setInterval(() => {
-      this.playAnimation(this.IMAGES_COIN);
+      if (!paused) {
+        this.playAnimation(this.IMAGES_COIN);
+      }
     }, 1000 / 2)
-
   }
-
 }

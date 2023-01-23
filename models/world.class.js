@@ -32,14 +32,18 @@ class World {
 
   checkActivities() {
     setInterval(() => {
-      // Check collisions ///////////////////////////////
-      this.checkCollision();
+      if (!paused) {
+        // Check collisions ///////////////////////////////
+        this.checkCollision();
+      }
     }, 10);
 
     setInterval(() => {
-      // check throwing bottle
-      this.checkThrowObject();
+      if (!paused) {
 
+        // check throwing bottle
+        this.checkThrowObject();
+      }
     }, 200);
 
 
@@ -81,8 +85,7 @@ class World {
   jumpCollision(enemy) {
     let pepe = this.character.y + this.character.height - 10;
     let chicka = enemy.y + enemy.height - enemy.offset.bottom;
-    console.log('Pepe:', pepe, ' Chicka:', chicka);
-    return pepe < chicka;
+    return (pepe < chicka);
   }
 
   checkCollisionCollectable() {
@@ -117,7 +120,6 @@ class World {
     collectable.y = -100;
     this.bottlesCollected += 1;
     document.getElementById('bottlesCollected').innerHTML = /*html*/ `${this.bottlesCollected}`;
-    // console.log('Bottles collected: ', this.bottlesCollected);
   }
 
   draw() {
@@ -163,7 +165,7 @@ class World {
       mo.draw(this.ctx);
     }
 
-    mo.drawFrame(this.ctx);
+    // mo.drawFrame(this.ctx);
 
   };
 

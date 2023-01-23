@@ -38,8 +38,9 @@
 </head>
 
 <body onload="init()">
-  <div class="game__main-container">
-    <div class="canvas-container">
+  <div class="game__main-container" id="game__main-container">
+
+    <div class="canvas-container" id="canvas-container">
       <h1>El pollo loco</h1>
       <div class="canvas-wrapper">
         <canvas class="" id="canvas" width="720px" height="480px"></canvas>
@@ -62,11 +63,10 @@
         <div class="button btn-jump d-none" id="jump-button"></div>
         <div class="button btn-throw d-none" id="throw-button"></div>
         <div class="button btn-pause d-none" id="pause-button"></div>
+        <div class="button btn-fullscreen d-none " id="fullscreen-button"></div>
       </div>
     </div>
-
   </div>
-
 </body>
 
 </html>

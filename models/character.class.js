@@ -7,7 +7,6 @@ class Character extends MovableObject {
   screen;
 
 
-
   IMAGES_WAITING = [
     './assets/img/2_character_pepe/1_idle/idle/I-1.png',
     './assets/img/2_character_pepe/1_idle/idle/I-2.png',
@@ -58,15 +57,12 @@ class Character extends MovableObject {
     'assets/img/2_character_pepe/4_hurt/H-43.png',
   ];
 
-
-
   constructor() {
     super().loadImage('./assets/img/2_character_pepe/2_walk/W-21.png');
     this.offset.top = 110;
     this.offset.bottom = 30;
     this.offset.left = 30;
     this.offset.right = 30;
-
     this.loadAllImages(this.IMAGES_WAITING);
     this.loadAllImages(this.IMAGES_WALKING);
     this.loadAllImages(this.IMAGES_JUMPING);
@@ -79,25 +75,17 @@ class Character extends MovableObject {
   animate() {
     setInterval(() => {
       if (!paused) {
-        if (world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-          // tatsächliche Bewegung auf der X Achse nach RECHTS
-          this.otherDirection = false;
-          this.moveRight();
-          this.walking_sound.play();
+        if (this.wantMovingRight()) {
+          this.letMovingRight();
         }
-        if (world.keyboard.LEFT && this.x > -600) {
-          // tatsächliche Bewegung auf der X Achse nach LINKS
-          this.otherDirection = true;
-          this.moveLeft();
-          this.walking_sound.play();
+        if (this.wantMovingLeft()) {
+          this.letMovingLeft();
         }
-        if (!world.keyboard.LEFT && !world.keyboard.RIGHT || this.y < 195) {
-          // stop walking sound
-          this.walking_sound.pause();
-          this.walking_sound.currentTime = 0;
+        if (this.dontWalkOrJump()) {
+          this.stopWalkingSound();
         }
         if (world.keyboard.SPACE && !this.isAboveGround()) {
-          // jumping
+          // let Pepe jump
           this.jump();
         }
         // move camera position 
@@ -108,16 +96,9 @@ class Character extends MovableObject {
     setInterval(() => {
       if (!paused) {
         if (this.isDead()) {
-          // if dead abort character and stop all intervals and sound
-          this.playAnimation(this.IMAGES_DEAD);
-          this.y += this.speed * 2;
-          // console.log('Character Y', this.y);
-          if (this.y > 450) {
-            clearAllIntervals();
-
-            this.walking_sound.pause();
-            this.walking_sound.currentTime = 0;
-            exitGame('./assets/img/9_intro_outro_screens/game_over/you lost.png');
+          this.playDeathAnimation();
+          if (this.outsideViewpoint()) {
+            this.stopTheGame();
           }
         } else if (this.isHurt()) {
           this.playAnimation(this.IMAGES_HURT);
@@ -128,8 +109,54 @@ class Character extends MovableObject {
         } else {
           this.playAnimation(this.IMAGES_WAITING);
         }
-
       }
     }, 1000 / 10)
+  }
+
+  wantMovingRight() {
+    return (world.keyboard.RIGHT && this.x < this.world.level.level_end_x)
+  }
+
+  letMovingRight() {
+    this.otherDirection = false;
+    this.moveRight();
+    this.walking_sound.play();
+  }
+
+  wantMovingLeft() {
+    return (world.keyboard.LEFT && this.x > -600);
+  }
+
+  letMovingLeft() {
+    this.otherDirection = true;
+    this.moveLeft();
+    this.walking_sound.play();
+  }
+
+  dontWalkOrJump() {
+    return (!world.keyboard.LEFT && !world.keyboard.RIGHT || this.y < 195);
+  }
+
+  stopWalkingSound() {
+    // stop walking sound
+    this.walking_sound.pause();
+    this.walking_sound.currentTime = 0;
+  }
+
+  playDeathAnimation() {
+    // if dead abort character
+    this.playAnimation(this.IMAGES_DEAD);
+    this.y += this.speed * 2;
+  }
+
+  outsideViewpoint() {
+    return (this.y > 450);
+  }
+
+  stopTheGame() {
+    clearAllIntervals();
+    this.walking_sound.pause();
+    this.walking_sound.currentTime = 0;
+    exitGame('./assets/img/9_intro_outro_screens/game_over/you lost.png');
   }
 }
