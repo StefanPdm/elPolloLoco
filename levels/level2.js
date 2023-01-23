@@ -1,7 +1,7 @@
-function setLevel1() {
+function setLevel2() {
 
-  let level1;
-  level1 = new Level(
+  let level2;
+  level2 = new Level(
 
     [
       new Coin(),
@@ -30,12 +30,12 @@ function setLevel1() {
     [
       new Endboss(),
       new Chicken(),
+      new Chicken(),
+      new Chicken(),
       new Chicken()
     ],
     [
       new Cloud('./assets/img/5_background/layers/4_clouds/1.png'),
-      new Cloud('./assets/img/5_background/layers/4_clouds/2.png'),
-      new Cloud('./assets/img/5_background/layers/4_clouds/2.png'),
       new Cloud('./assets/img/5_background/layers/4_clouds/2.png')
     ],
     [
@@ -65,5 +65,5 @@ function setLevel1() {
       new BackgroundObject('./assets/img/5_background/layers/1_first_layer/2.png', 719 * 3, 0)
     ]
   );
-  return level1;
+  return level2;
 }

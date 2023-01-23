@@ -55,21 +55,18 @@ h1 {
 
 .wrapper__bottom-line {
   position: absolute;
-
   top: calc(50% + 50% - 2em);
-
   overflow: hidden;
   padding: 3px 3px;
   box-shadow: 0px 0px 7px 4px rgba(0, 0, 0, 0.4);
   border: 1px solid black;
   border-radius: 7px;
   backdrop-filter: blur(4px);
-
   width: 1.2em;
-
   cursor: pointer;
   transition: all 0.5s ease-in-out;
   user-select: none;
+  z-index: 1;
 }
 
 h4 {
@@ -82,9 +79,10 @@ h4 {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-.wrapper__bottom-line:hover {
+/* .wrapper__bottom-line:hover, */
+.showHelp {
   transition: all 0.5s ease-in-out;
-  width: calc(100% - 2em);
+  width: calc(100% - 2em) !important;
   padding-left: 8px;
   padding-right: 8px;
 }
@@ -132,7 +130,64 @@ canvas {
   top: 17.5%;
 }
 
+.button-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  /* background-color: aqua; */
+  /* opacity: .5; */
+}
 
+.button {
+  position: absolute;
+  width: 3rem;
+  height: 3rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  cursor: pointer;
+  /* z-index: 10; */
+}
+
+.btn-start {
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: url('./assets/img/buttons/play-button.png');
+}
+
+.btn-right {
+  bottom: 5%;
+  right: 5%;
+  background-image: url('./assets/img/buttons/play-button.png');
+}
+
+.btn-left {
+  bottom: 5%;
+  left: 5%;
+  background-image: url('./assets/img/buttons/left-button.png');
+}
+
+.btn-jump {
+  bottom: 5%;
+  left: 15%;
+  background-image: url('./assets/img/buttons/jump-button.png');
+}
+
+.btn-throw {
+  bottom: 5%;
+  right: 15%;
+  background-image: url('./assets/img/buttons/bottle-button.png');
+}
+
+.btn-pause {
+  top: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: url('./assets/img/buttons/pause-button.png');
+}
 
 @media (width < 720px) {
   h1 {
@@ -173,6 +228,11 @@ canvas {
   #bottlesCollected {
     font-size: 0.6rem;
   }
+
+  .button {
+    width: 2em;
+    height: 2em;
+  }
 }
 
 @media (height < 480px) {
@@ -180,12 +240,26 @@ canvas {
     height: 100vh;
   }
 
+  body {
+    background-image: unset;
+  }
+
   .canvas-container,
   .canvas-wrapper {
-    width: 100%;
+    /* width: 100%; */
   }
 
   .wrapper__bottom-line {
     display: none;
+  }
+}
+
+@media (height > 480px) and (width > 1200px) {
+
+  .btn-jump,
+  .btn-throw,
+  .btn-left,
+  .btn-right {
+    display: none !important;
   }
 }

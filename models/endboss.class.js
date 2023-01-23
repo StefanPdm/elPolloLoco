@@ -46,19 +46,19 @@ class Endboss extends MovableObject {
       if (this.isDead()) {
         this.playAnimation(this.IMAGES_DEAD);
         this.loadImage(this.IMAGES_DEAD[2]);
-        // setTimeout(world.gameOver, 1000);
+        // console.log('GAMEOVER');
+        clearAllIntervals();
+        if (levelCounter < world.levels.length - 1) {
+          levelCounter += 1;
+        }
+        setTimeout(() => {
+          exitGame('./assets/img/9_intro_outro_screens/game_over/game over.png');
+        }, 1000);
       } else if (this.isHurt()) {
         this.playAnimation(this.IMAGES_HURT);
       } else {
         this.playAnimation(this.IMAGES_ALERT);
       }
     }, 1000 / 10)
-
-
-
-
-
-
-
   }
 }

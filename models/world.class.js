@@ -4,10 +4,9 @@ class World {
   statusBarCoinGreen = new StatusBarCoins();
   statusBarBottleOrange = new StatusBarBottles();
   statusBarEndboss = new StatusBarEndboss();
-
-  level = level1;
-
-  worldCanvas;
+  levels = [setLevel1(), setLevel2()];
+  level = this.levels[levelCounter];
+  canvas;
   ctx;
   keyboard;
   camera_x = 0;
@@ -16,13 +15,15 @@ class World {
   bottlesCollected = 0;
 
 
-  constructor(canvasGame, keyboard) {
-    this.ctx = canvasGame.getContext('2d');
-    this.worldCanvas = canvasGame;
+
+  constructor(canvas, keyboard) {
+    this.ctx = canvas.getContext('2d');
+    this.canvas = canvas;
     this.keyboard = keyboard;
     this.draw();
     this.setWorld();
     this.checkActivities();
+
   }
 
   setWorld() {
@@ -31,16 +32,24 @@ class World {
 
   checkActivities() {
     setInterval(() => {
-      // check throwing bottle
-      this.checkThrowObject();
       // Check collisions ///////////////////////////////
       this.checkCollision();
-    }, 100);
+    }, 10);
+
+    setInterval(() => {
+      // check throwing bottle
+      this.checkThrowObject();
+
+    }, 200);
+
+
+
+
   }
 
   checkThrowObject() {
     // check throwing bottles
-    if (this.keyboard.D && this.bottlesCollected > 0) {
+    if (this.keyboard.D && this.bottlesCollected > 0 && !this.character.otherDirection) {
       let bottle = new ThrowableObject(this.character.x + 40, this.character.y + 100);
       this.bottles.push(bottle);
       this.bottlesCollected -= 1;
@@ -56,17 +65,29 @@ class World {
 
   checkCollisionEnemy() {
     this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy)) {
-        this.character.hit(5);
-        this.statusBarHealthBlue.setPercentage(this.character.energy);
+      if (this.character.isColliding(enemy) && enemy.alive) {
+        if (!this.jumpCollision(enemy) && enemy.alive) {
+          this.character.hit(0.5);
+          this.statusBarHealthBlue.setPercentage(this.character.energy);
+        } else {
+          console.log('Jumging Hit');
+          enemy.alive = false;
+          enemy.loadImage('./assets/img/3_enemies_chicken/chicken_normal/2_dead/dead.png');
+        }
       };
     });
+  }
+
+  jumpCollision(enemy) {
+    let pepe = this.character.y + this.character.height - 10;
+    let chicka = enemy.y + enemy.height - enemy.offset.bottom;
+    console.log('Pepe:', pepe, ' Chicka:', chicka);
+    return pepe < chicka;
   }
 
   checkCollisionCollectable() {
     this.level.collectables.forEach((collectable) => {
       if (this.character.isColliding(collectable)) {
-
         if (collectable.type === 'coin') {
           this.increaseCoinAmount(collectable);
         }
@@ -80,16 +101,10 @@ class World {
   checkCollisionBottleWithEndboss() {
     this.bottles.forEach((flyingBottle) => {
       if (this.level.enemies[0].isColliding(flyingBottle)) {
-        console.log('Endboss hidden!!!!');
         this.level.enemies[0].hit(20);
         flyingBottle.y = 600;
-        console.log('Energy:', this.level.enemies[0].energy);
       }
     });
-    if (this.level.enemies[0].energy <= 0) {
-      console.log('GAMEOVER');
-      // setTimeout(this.gameOver, 1000);
-    }
   }
 
   increaseCoinAmount(collectable) {
@@ -107,17 +122,18 @@ class World {
 
   draw() {
     // Clear Canvas before draw (again)
-    // this.ctx.clearRect(100, 100, this.worldCanvas.width, this.worldCanvas.height);
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backgroundObject);
 
     this.addObjectsToMap(this.level.clouds);
     this.addObjectsToMap(this.level.enemies);
+
     this.addObjectsToMap(this.level.collectables);
 
-
-    this.addToMap(this.character);
     this.addObjectsToMap(this.bottles);
+    this.addToMap(this.character);
+
     this.ctx.translate(-this.camera_x, 0);
     // ab hier elemente die sich nicht verschieben
     this.addToMap(this.statusBarHealthBlue);
@@ -126,9 +142,10 @@ class World {
     this.addToMap(this.statusBarEndboss);
 
     // Draw wird immer wieder aufgerufen, je nach 
-    let self = this;
+    self = this;
+
     requestAnimationFrame(function () {
-      self.draw();
+      if (!gameOver) { self.draw(); }
     });
   }
 
@@ -141,7 +158,8 @@ class World {
   addToMap(mo) {
     if (mo.otherDirection) {
       this.flipImage(mo);
-    } else {
+    }
+    else {
       mo.draw(this.ctx);
     }
 
@@ -157,15 +175,6 @@ class World {
     this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
     mo.x = mo.x * -1;
     this.ctx.restore();
-  }
-
-  clearAllIntervals() {
-    for (let i = 1; i < 9999; i++) window.clearInterval(i);
-  }
-
-  gameOver() {
-
-
   }
 
 }
