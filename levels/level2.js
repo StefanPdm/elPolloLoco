@@ -4,13 +4,11 @@ function setLevel2() {
 
 
   level2 = new Level(
-
     createCollectables(),
     createEnemiesLevel2(),
     createClouds(),
     createBackgroundObjects()
   );
-
   return level2;
 }
 

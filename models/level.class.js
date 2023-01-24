@@ -9,17 +9,15 @@ class Level {
   bottle_sound = new Audio('./assets/audio/bottle.mp3');
   chicken_sound = new Audio('./assets/audio/chicken.mp3');
   gameover_sound = new Audio('./assets/audio/gameover.mp3');
-
   victory_sound = new Audio('./assets/audio/victory.mp3');
   throw_sound = new Audio('./assets/audio/throw.mp3');
 
   constructor(collectables, enemies, clouds, backgroundObject) {
-    // this.bottles = bottles;
     this.enemies = enemies;
     this.clouds = clouds;
     this.backgroundObject = backgroundObject;
     this.collectables = collectables;
-
+    this.chicken_sound.volume = 0.2;
+    this.bottle_sound.volume = 0.2;
   }
-
 }   

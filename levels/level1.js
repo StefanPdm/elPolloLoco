@@ -1,6 +1,7 @@
 function setLevel1() {
 
   let level1;
+
   level1 = new Level(
 
     createCollectables(),
