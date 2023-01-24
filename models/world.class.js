@@ -73,10 +73,12 @@ class World {
         if (!this.jumpCollision(enemy) && enemy.alive) {
           this.character.hit(0.5);
           this.statusBarHealthBlue.setPercentage(this.character.energy);
+          this.character.hit_sound.play();
         } else {
           console.log('Jumging Hit');
           enemy.alive = false;
           enemy.loadImage('./assets/img/3_enemies_chicken/chicken_normal/2_dead/dead.png');
+          this.level.chicken_sound.play();
         }
       };
     });
@@ -93,9 +95,11 @@ class World {
       if (this.character.isColliding(collectable)) {
         if (collectable.type === 'coin') {
           this.increaseCoinAmount(collectable);
+          this.level.coin_sound.play();
         }
         if (collectable.type === 'bottle') {
           this.increaseBottleAmount(collectable);
+          this.level.bottle_sound.play();
         }
       };
     });

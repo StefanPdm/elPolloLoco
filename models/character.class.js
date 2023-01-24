@@ -3,7 +3,9 @@ class Character extends MovableObject {
   y = -30;
   world;
   speed = 5;
-  walking_sound = new Audio('./assets/audio/running2.mp3')
+  walking_sound = new Audio('./assets/audio/running2.mp3');
+  hit_sound = new Audio('./assets/audio/hit.mp3');
+  lost_sound = new Audio('./assets/audio/lost.mp3');
   screen;
 
 
@@ -75,40 +77,13 @@ class Character extends MovableObject {
   animate() {
     setInterval(() => {
       if (!paused) {
-        if (this.wantMovingRight()) {
-          this.letMovingRight();
-        }
-        if (this.wantMovingLeft()) {
-          this.letMovingLeft();
-        }
-        if (this.dontWalkOrJump()) {
-          this.stopWalkingSound();
-        }
-        if (world.keyboard.SPACE && !this.isAboveGround()) {
-          // let Pepe jump
-          this.jump();
-        }
-        // move camera position 
-        this.world.camera_x = -this.x + 120;
+        this.checkCharacterActivites();
       }
     }, 1000 / 60);
 
     setInterval(() => {
       if (!paused) {
-        if (this.isDead()) {
-          this.playDeathAnimation();
-          if (this.outsideViewpoint()) {
-            this.stopTheGame();
-          }
-        } else if (this.isHurt()) {
-          this.playAnimation(this.IMAGES_HURT);
-        } else if (this.isAboveGround()) {
-          this.playAnimation(this.IMAGES_JUMPING);
-        } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-          this.playAnimation(this.IMAGES_WALKING);
-        } else {
-          this.playAnimation(this.IMAGES_WAITING);
-        }
+        this.checkCharacterCondition();
       }
     }, 1000 / 10)
   }
@@ -158,5 +133,41 @@ class Character extends MovableObject {
     this.walking_sound.pause();
     this.walking_sound.currentTime = 0;
     exitGame('./assets/img/9_intro_outro_screens/game_over/you lost.png');
+  }
+
+  checkCharacterActivites() {
+    if (this.wantMovingRight()) {
+      this.letMovingRight();
+    }
+    if (this.wantMovingLeft()) {
+      this.letMovingLeft();
+    }
+    if (this.dontWalkOrJump()) {
+      this.stopWalkingSound();
+    }
+    if (world.keyboard.SPACE && !this.isAboveGround()) {
+      // let Pepe jump
+      this.jump();
+    }
+    // move camera position 
+    this.world.camera_x = -this.x + 120;
+  }
+
+  checkCharacterCondition() {
+    if (this.isDead()) {
+      this.playDeathAnimation();
+      this.lost_sound.play();
+      if (this.outsideViewpoint()) {
+        this.stopTheGame();
+      }
+    } else if (this.isHurt()) {
+      this.playAnimation(this.IMAGES_HURT);
+    } else if (this.isAboveGround()) {
+      this.playAnimation(this.IMAGES_JUMPING);
+    } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+      this.playAnimation(this.IMAGES_WALKING);
+    } else {
+      this.playAnimation(this.IMAGES_WAITING);
+    }
   }
 }

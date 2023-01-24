@@ -49,6 +49,7 @@ class Endboss extends MovableObject {
           this.stopTheGame();
         } else if (this.isHurt()) {
           this.playAnimation(this.IMAGES_HURT);
+          world.level.chicken_sound.play();
         } else {
           this.playAnimation(this.IMAGES_ALERT);
         }
@@ -57,6 +58,7 @@ class Endboss extends MovableObject {
   }
 
   stopTheGame() {
+    world.level.gameover_sound.play();
     this.playAnimation(this.IMAGES_DEAD);
     this.loadImage(this.IMAGES_DEAD[2]);
     clearAllIntervals();

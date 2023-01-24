@@ -261,7 +261,7 @@ canvas {
   }
 }
 
-@media (height > 480px) and (width > 1200px) {
+/* @media (height > 480px) and (width > 1200px) {
 
   .btn-jump,
   .btn-throw,
@@ -269,4 +269,4 @@ canvas {
   .btn-right {
     display: none !important;
   }
-}
+} */

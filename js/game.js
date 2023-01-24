@@ -21,6 +21,9 @@ let paused = false;
 let fullScreenContainer;
 let fullscreen;
 let fullscreenOn = false;
+let isTouchDevice = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+console.log('is touch device:', isTouchDevice);
+
 
 
 function init() {
@@ -54,8 +57,7 @@ function startGame() {
   gameOver = false;
   world = new World(canvas, keyboard);
   toogleViewofElements();
-  showGameButtons();
-
+  if (isTouchDevice) { showGameButtons() };
 }
 
 function toogleViewofElements() {
@@ -63,6 +65,7 @@ function toogleViewofElements() {
   document.getElementById('bottlesCollected').classList.toggle('d-none');
   document.getElementById('pause-button').classList.toggle('d-none');
   document.getElementById('start-button').classList.toggle('d-none');
+  document.getElementById('fullscreen-button').classList.toggle('d-none');
 }
 
 function showGameButtons() {
@@ -70,7 +73,7 @@ function showGameButtons() {
   document.getElementById('right-button').classList.remove('d-none');
   document.getElementById('jump-button').classList.remove('d-none');
   document.getElementById('throw-button').classList.remove('d-none');
-  document.getElementById('fullscreen-button').classList.remove('d-none');
+
 }
 
 function hideGameButtons() {
@@ -95,7 +98,6 @@ function setButtonListener() {
 function setStartButtonListener() {
   start = document.getElementById('start-button');
   start.addEventListener('click', startGame);
-
 }
 
 function setPauseButtonListener() {
@@ -122,13 +124,9 @@ function toggleFullscreenStatus() {
 
 function toggleFullscreen() {
   if (fullscreenOn) {
-    // fullscreenOn = false;
-    // document.getElementById('fullscreen-button').style.backgroundImage = 'url(./assets/img/buttons/fullscreen-button.png)';
     closeFullscreen();
 
   } else {
-    // fullscreenOn = true;
-    // document.getElementById('fullscreen-button').style.backgroundImage = 'url(./assets/img/buttons/exit-fullscreen-button.png)';
     openFullscreen(fullScreenContainer);
   }
 }

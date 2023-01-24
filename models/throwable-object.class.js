@@ -22,8 +22,8 @@ class ThrowableObject extends MovableObject {
     this.loadAllImages(this.IMAGES_BOTTLE_SPLASH);
     this.x = x;
     this.y = y;
-    this.angle =
-      this.width = 50;
+    // this.angle;
+    this.width = 50;
     this.height = 50;
     this.throw();
     this.animate();
@@ -32,6 +32,7 @@ class ThrowableObject extends MovableObject {
   throw() {
     this.speedY = 30;
     this.applyGravity();
+    world.level.throw_sound.play();
     setInterval(() => {
       this.x += 10;
     }, 25);
